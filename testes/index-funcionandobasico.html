@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Teste de requisição</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<meta charset="UTF-8">
+	<script src="jquery-1.12.3.min.js"></script>
+	<script src="javas.js"> </script>
+</head>
+<body>
+	<header>
+		<h1>Fruteira</h1>
+	</header>
+	
+	<div id="caixa">
+		<form id="caixapesquisa" action="#" method="POST">
+			<input id="chave" type="text" placeholder="Digite aqui" onKeyPress="teste()" onfocus="this.value='';"/>
+		</form>
+		</br>
+		<button id="botaoum" onclick ="teste()">Pesquisar </button>
+		</br>
+		<button id="deletartodos" onclick ="deletar()">Deletar ID </button>
+		<div class="menu">
+			<button id="botaotodos"  onclick="todos()">Listar todos </button>
+		</div>
+		<div id="conteudo">
+		</div>
+	</div>
+</body>
+</html>

@@ -2,10 +2,10 @@
 <html>
 <head>
 	<title>Teste de requisição</title>
-	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<meta charset="UTF-8">
-	<script src="jquery-1.12.3.min.js"></script>
-	<script src="javas.js"> </script>
+	<script src="js/jquery-1.12.3.js"></script>
+	<script src="js/javas.js"> </script>
 </head>
 <body>
 	<header>
@@ -13,16 +13,12 @@
 	</header>
 	
 	<div id="caixa">
-		<form id="caixapesquisa" action="#" method="POST">
-			<input id="chave" type="text" placeholder="Digite aqui" onKeyPress="teste()" onfocus="this.value='';"/>
-		</form>
-		</br>
-		<button id="pesquisarum" onclick ="incluium()">Incluir </button>
-		</br>	</br>
-		<button id="deletartodos" onclick ="deletar()">Deletar ID </button>
-		
 		<div class="menu">
+		<form id="caixapesquisa" action="#" method="POST">
+			<input id="chave" type="text" placeholder="Digite aqui"  onfocus="this.value='';"/>
+		</form>
 			<button id="botaotodos"  onclick="todos()">Listar todos </button>
+			<button id="botao"  onclick="deletar()">Deletar todos </button>
 		</div>
 		<div id="conteudo">
 		</div>

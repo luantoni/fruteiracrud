@@ -1,9 +1,12 @@
 var url="http://localhost:3000/";
 var params;
 var oi;
+
+
 	function teste(){
 		params = "product/"
 		oi = document.getElementById("chave").value.toLowerCase();
+		console.log(oi);
 		requisi (params, oi);
 	}
 	

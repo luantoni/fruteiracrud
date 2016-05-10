@@ -20,11 +20,6 @@
 	margin: 10px;
 }
 
-#botaoum, #botaolimpar, #botaotodos{
-	border-radius: 10px;
-	background-color:white;
-}
-
 #chave{
 	border-radius: 10px;
 }
@@ -47,6 +42,8 @@ input{
 }
 button{
 	font-size: 120%;
+	border-radius: 10px;
+	background-color:white;
 }
 table{
 	background-color:white;
