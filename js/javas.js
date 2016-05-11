@@ -3,6 +3,12 @@ var parametro;
 var opc;
 var identidade;
 
+	$(document).keypress(function(e) {
+	  if (e.which == 13) {
+		  incluir()
+		  }; 
+	});
+
 	function limpa(){
 		document.getElementById("conteudo").innerHTML = "";
 		document.getElementById("chave").value = "";
@@ -12,12 +18,6 @@ var identidade;
 		document.getElementById("identidade").value = "";
 	}
 	
-	function editar(){
-		identidade = document.getElementById("identidade").value;
-		parametro = "product/"+identidade;
-		opc = 4;
-		requi(parametro);
-	}
 	
 	function incluir (){
 		parametro = "product/";
@@ -44,9 +44,20 @@ var identidade;
 		requi(parametro);
 	}
 	
+	function deletartodos (){
+		opc = 5;
+		requi();
+	}
 	function todos(){
 		parametro = "product/";
 		opc = 3;
+		requi(parametro);
+	}
+	
+	function editar(){
+		identidade = document.getElementById("identidade").value;
+		parametro = "product/"+identidade;
+		opc = 4;
 		requi(parametro);
 	}
 	
@@ -101,6 +112,15 @@ var identidade;
 				};
 			xmlhttp.send(params);
 		}
+		
+		else if (opc == 5){
+			parametro = "product/";
+			for (var i=0; i < 6; i++){
+				xmlhttp.open("DELETE", url+parametro+i, true);
+				console.log(i)
+			}
+			xmlhttp.send();	
+		}
 	}
 	
 	function estante(produtos){
@@ -114,5 +134,7 @@ var identidade;
 				out+='<td>' + produtos[i].estoque + '</td></tr>';
 			}
 			'</table>'
+		
+		
 		document.getElementById("conteudo").innerHTML = out;			
 	}
