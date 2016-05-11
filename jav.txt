@@ -1,0 +1,41 @@
+	function teste(){
+		params = "product/"
+		oi = document.getElementById("chave").value.toLowerCase();
+		requisi (params, oi);
+	}
+	
+	function deletar(){
+		params = "product/"
+		oi = document.getElementById("chave").value.toLowerCase();
+		requisideletar (params, oi);
+	}
+	
+	function requisideletar (params, oi){
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function (){
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+				var myArr = JSON.parse(xmlhttp.responseText);
+					estoque(myArr);
+			}
+		}; 
+		xmlhttp.open("DELETE", url+params+oi, true);
+		xmlhttp.send(null);		
+	}
+	
+	function requisi(params, oi){
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function (){
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+				var myArr = JSON.parse(xmlhttp.responseText);
+					estoque(myArr);
+			}
+		}; 
+
+		xmlhttp.open("POST", url+params+oi, true);
+		xmlhttp.send(oi);
+		
+		/*xmlhttp.open("POST", , true);
+		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xmlhttp.send("nome=luisa&valor=2");*/
+	}
+	

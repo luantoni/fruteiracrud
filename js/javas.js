@@ -1,44 +1,72 @@
 var url="http://localhost:3000/";
-var params;
+var parametro;
 var oi;
+var opc;
 
-	
-	function todos(){
-		params = "product/";
-		assyncRequest(params);
+	function incluir (){
+		parametro = "product/";
+		
+	/*	var n = document.getElementById ("chave").value;
+		var v = document.getElementById ("valor").value;
+			$.ajax({
+			  type: 'POST',
+			  url: "http://localhost:3000/product/",
+			  data:{
+				  nome: n,
+				  valor: v  
+			  }
+			});*/
+		opc = 1;
+		requi(parametro);
 	}
+	
 	
 	function deletar(){
 		i = document.getElementById ("chave").value;
-		params = "product/"+i;
-		urlenviar = url+params;
-		deletarassync(urlenviar);
+		parametro = "product/"+i;
+		/*urlenviar = url+parametro;*/
+		opc = 2;
+		requi(parametro);
 	}
 	
-	function deletarassync(urlenviar){
+	function todos(){
+		parametro = "product/";
+		opc = 3;
+		requi(parametro);
+	}
+	
+	function requi (parametro){
+			
 		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.onreadystatechange = function (){
 			if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
 				var myArr = JSON.parse(xmlhttp.responseText);
-					estoque(myArr);
-					/*document.getElementById("conteudo").innerHTML = xmlhttp.responseText;*/
+				estoque(myArr);
 			}
-		}; 
-		xmlhttp.open("DELETE", urlenviar, true);
-		xmlhttp.send();		
-	}
-	
-	function assyncRequest(params){
-		var xmlhttp = new XMLHttpRequest();
-		xmlhttp.onreadystatechange = function (){
-			if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
-				var myArr = JSON.parse(xmlhttp.responseText);
-					estoque(myArr);
-					/*document.getElementById("conteudo").innerHTML = xmlhttp.responseText;*/
-			}
-		}; 
-		xmlhttp.open("GET", url+params, true);
-		xmlhttp.send();		
+		}
+		
+		if (opc == 1){ /*opção incluir*/
+			var chave = document.getElementById("chave").value;
+			var valor = document.getElementById("valor").value;
+			var params="nome="+chave+"&valor="+valor;
+			xmlhttp.open("POST", url+"product", true);
+			xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+				
+			xmlhttp.onload = function () {
+					console.log(this.responseText);
+				};
+			xmlhttp.send(params);
+		}
+		
+		else if (opc == 2){/*opção deletar*/
+			xmlhttp.open("DELETE", url+parametro, true);
+			xmlhttp.send();	
+		}
+		
+		else if (opc == 3){ /*opção todos*/
+			xmlhttp.open("GET", url+parametro, true);
+			xmlhttp.send();	
+		}
 	}
 	
 	function estoque(produtos){

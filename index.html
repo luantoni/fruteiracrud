@@ -14,11 +14,13 @@
 	
 	<div id="caixa">
 		<div class="menu">
-		<form id="caixapesquisa" action="#" method="POST">
-			<input id="chave" type="text" placeholder="Digite aqui"  onfocus="this.value='';"/>
+		<form method="POST" action="somewhere" onsubmit="return ola(this);" id="caixapesquisa" >
+			<input id="chave" name="user" value="OLA" type="text" placeholder="Digite aqui"  onfocus="this.value='';"/>
+			<input id="valor" name="pwd"  value="password" type="text" placeholder="Digite aqui"  onfocus="this.value='';"/>
 		</form>
+			<button id="incluir"  onclick="incluir()">Incluir </button>
 			<button id="botaotodos"  onclick="todos()">Listar todos </button>
-			<button id="botao"  onclick="deletar()">Deletar todos </button>
+			<button id="botao"  onclick="deletar()">Deletar </button>
 		</div>
 		<div id="conteudo">
 		</div>
