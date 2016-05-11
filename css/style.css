@@ -5,8 +5,9 @@
 	margin: 10px;
 	border-radius: 10px;
 	border: 8px double grey;
-	height: 450px; 
+	height: auto;
 }
+
 #conteudo{
 	background-color: #003300;
 	margin: 10px;
@@ -15,6 +16,12 @@
 }
 
 .menu{
+	text-align: center;
+	padding: 5px;
+	margin: 10px;
+}
+.classeinput{
+	display:none;
 	text-align: center;
 	padding: 5px;
 	margin: 10px;
@@ -29,7 +36,7 @@ h1 {
 }
 
 header{
-/*	background-image: url("download (1).jpg");*/
+	background-image: url("download (1).jpg");
 	border-radius: 10px;
 	box-shadow:0 0 20px #003300;
 	margin: 10px;

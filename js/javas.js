@@ -5,10 +5,10 @@ var identidade;
 
 	$(document).keypress(function(e) {
 	  if (e.which == 13) {
-		  incluir()
-		  }; 
+		  incluir();
+		  }
 	});
-
+	
 	function limpa(){
 		document.getElementById("conteudo").innerHTML = "";
 		document.getElementById("chave").value = "";
@@ -20,6 +20,8 @@ var identidade;
 	
 	
 	function incluir (){
+		$('.classeinput').show();
+		$('.classebotoes').show();
 		parametro = "product/";
 	/*	var n = document.getElementById ("chave").value;
 		var v = document.getElementById ("valor").value;
@@ -37,6 +39,8 @@ var identidade;
 	
 	
 	function deletar(){
+		$('.classeinput').show();
+		$('.classebotoes').show();
 		var i = document.getElementById ("identidade").value;
 		parametro = "product/"+i;
 		/*urlenviar = url+parametro;*/
@@ -44,25 +48,28 @@ var identidade;
 		requi(parametro);
 	}
 	
-	function deletartodos (){
-		opc = 5;
-		requi();
-	}
 	function todos(){
+		$('.classeinput').hide();
 		parametro = "product/";
 		opc = 3;
 		requi(parametro);
 	}
 	
 	function editar(){
+		$('.classeinput').show();
+		$('.classebotoes').show();
 		identidade = document.getElementById("identidade").value;
 		parametro = "product/"+identidade;
 		opc = 4;
 		requi(parametro);
 	}
 	
+	function deletartodos (){
+		opc = 5;
+		requi();
+	}
+	
 	function requi (parametro){
-			
 		var xmlhttp = new XMLHttpRequest();
 		xmlhttp.onreadystatechange = function (){
 			if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
@@ -71,6 +78,7 @@ var identidade;
 			}
 		}
 		
+		
 		if (opc == 1){ /*opção incluir*/
 			var chave = document.getElementById("chave").value;
 			var valor = document.getElementById("valor").value;
@@ -78,12 +86,14 @@ var identidade;
 			var estoque = document.getElementById("estoque").value;
 			var params="nome="+chave+"&valor="+valor+"&status="+estado+"&estoque="+estoque;
 			
-			xmlhttp.open("POST", url+"product", true);
-			xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-				
-			xmlhttp.onload = function () {
-					console.log(this.responseText);
-				};
+			if (chave != "" & valor != "" & estado != "" & estoque != ""){
+				xmlhttp.open("POST", url+"product", true);
+				xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+					
+				xmlhttp.onload = function () {
+						console.log(this.responseText);
+					};
+			}
 			xmlhttp.send(params);
 		}
 		
@@ -97,7 +107,7 @@ var identidade;
 			xmlhttp.send();	
 		}
 		
-		else if (opc == 4){
+		else if (opc == 4){ /*opção editar*/
 			var chave = document.getElementById("chave").value;
 			var valor = document.getElementById("valor").value;
 			var estado = document.getElementById("status").value;

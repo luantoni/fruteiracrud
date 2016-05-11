@@ -14,25 +14,31 @@
 	
 	<div id="caixa">
 		<div class="menu">
-		<form method="POST" action="somewhere" onsubmit="return ola(this);" id="caixapesquisa" >
-			<input id="identidade"  type="text" placeholder="Id"  onfocus="this.value='';"/>
-			<br>
-			<input id="chave"  type="text" placeholder="Produto"  onfocus="this.value='';"/>
-			<br>
-			<input id="valor"  type="text" placeholder="R$"  onfocus="this.value='';"/>
-			<br>
-			<input id="status" type="text" placeholder="Status"  onfocus="this.value='';"/>
-			<br>
-			<input id="estoque" type="text" placeholder="Estoque"  onfocus="this.value='';"/>
-		</form>
-			<br>
-			<button id="incluir"  onclick="incluir()">Incluir </button>
-			<button id="botaotodos"  onclick="todos()">Listar todos </button>
-			<button id="botao"  onclick="deletar()">Deletar </button>
-			<button id="botaolimpar" onclick="limpa()">Limpar</button>
-			<button id="editar" onclick="editar()">Editar</button>
-			<button id="deletartodos" onclick="deletartodos()">Deletar Todos</button>
+			<div class = "classeinput">
+				<form method="POST" action="#" onsubmit="handle" id="caixapesquisa" >
+					<input id="identidade"  type="text" placeholder="Id"  onfocus="this.value='';"/>
+					<br>
+					<input id="chave"  type="text" placeholder="Produto"  onfocus="this.value='';"/>
+					<br>
+					<input id="valor"  type="text" placeholder="R$"  onfocus="this.value='';"/>
+					<br>
+					<input id="status" type="text" placeholder="Status"  onfocus="this.value='';"/>
+					<br>
+					<input id="estoque" type="text" placeholder="Estoque"  onfocus="this.value='';"/>
+				</form>
+				<br>
+			</div>
+			
+			<div class="classebotoes">
+				<button id="incluir"  onclick="incluir()">Incluir </button>
+				<button id="botao"  onclick="deletar()">Deletar </button>
+				<button id="editar" onclick="editar()">Editar</button>
+				<button id="botaolimpar" onclick="limpa()">Limpar</button>
+				<button id="botaotodos"  onclick="todos()">Listar todos </button>
+				<button id="deletartodos" onclick="deletartodos()">Deletar Todos</button>
+			</div>
 		</div>
+		
 		<div id="conteudo">
 		</div>
 	</div>
