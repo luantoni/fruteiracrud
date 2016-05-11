@@ -1,11 +1,26 @@
 var url="http://localhost:3000/";
 var parametro;
-var oi;
 var opc;
+var identidade;
 
+	function limpa(){
+		document.getElementById("conteudo").innerHTML = "";
+		document.getElementById("chave").value = "";
+		document.getElementById("valor").value = "";
+		document.getElementById("status").value = "";
+		document.getElementById("estoque").value = "";
+		document.getElementById("identidade").value = "";
+	}
+	
+	function editar(){
+		identidade = document.getElementById("identidade").value;
+		parametro = "product/"+identidade;
+		opc = 4;
+		requi(parametro);
+	}
+	
 	function incluir (){
 		parametro = "product/";
-		
 	/*	var n = document.getElementById ("chave").value;
 		var v = document.getElementById ("valor").value;
 			$.ajax({
@@ -22,7 +37,7 @@ var opc;
 	
 	
 	function deletar(){
-		i = document.getElementById ("chave").value;
+		var i = document.getElementById ("identidade").value;
 		parametro = "product/"+i;
 		/*urlenviar = url+parametro;*/
 		opc = 2;
@@ -41,14 +56,17 @@ var opc;
 		xmlhttp.onreadystatechange = function (){
 			if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
 				var myArr = JSON.parse(xmlhttp.responseText);
-				estoque(myArr);
+				estante(myArr);
 			}
 		}
 		
 		if (opc == 1){ /*opção incluir*/
 			var chave = document.getElementById("chave").value;
 			var valor = document.getElementById("valor").value;
-			var params="nome="+chave+"&valor="+valor;
+			var estado = document.getElementById("status").value;
+			var estoque = document.getElementById("estoque").value;
+			var params="nome="+chave+"&valor="+valor+"&status="+estado+"&estoque="+estoque;
+			
 			xmlhttp.open("POST", url+"product", true);
 			xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 				
@@ -67,9 +85,25 @@ var opc;
 			xmlhttp.open("GET", url+parametro, true);
 			xmlhttp.send();	
 		}
+		
+		else if (opc == 4){
+			var chave = document.getElementById("chave").value;
+			var valor = document.getElementById("valor").value;
+			var estado = document.getElementById("status").value;
+			var estoque = document.getElementById("estoque").value;
+			var params="nome="+chave+"&valor="+valor+"&status="+estado+"&estoque="+estoque;
+			
+			xmlhttp.open("PUT", url+parametro, true);
+			xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+				
+			xmlhttp.onload = function () {
+					console.log(this.responseText);
+				};
+			xmlhttp.send(params);
+		}
 	}
 	
-	function estoque(produtos){
+	function estante(produtos){
 		var out = "";
 		out+='<table border="1"><tr><th>Chave</th><th>Produto</th><th>Valor</th><th>Status</th><th>Estoque</th></tr>';		
 			for (i=0; i < produtos.length; i++){

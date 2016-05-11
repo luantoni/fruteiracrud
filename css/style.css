@@ -39,6 +39,7 @@ header{
 input{
 	font-size: 170%;
 	text-align: center;
+	border-radius: 10px;
 }
 button{
 	font-size: 120%;
