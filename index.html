@@ -13,10 +13,10 @@
 	</header>
 	
 	<div id="caixa">
-		<div class="menu">
+		<div class="menuprincipal">
 			<div class = "classeinput">
-				<form method="POST" action="#" onsubmit="handle" id="caixapesquisa" >
-					<input id="identidade"  type="text" placeholder="Id"  onfocus="this.value='';"/>
+				<form id="caixapesquisa" action="#" method="POST" >
+					<input id="identidade" value="" type="text" placeholder="Id" onfocus="this.value='';"/>
 					<br>
 					<input id="chave"  type="text" placeholder="Produto"  onfocus="this.value='';"/>
 					<br>
@@ -30,12 +30,12 @@
 			</div>
 			
 			<div class="classebotoes">
+				<button id="pesquisar" onclick="pesquisar()">Pesquisar</button>
 				<button id="incluir"  onclick="incluir()">Incluir </button>
 				<button id="botao"  onclick="deletar()">Deletar </button>
 				<button id="editar" onclick="editar()">Editar</button>
-				<button id="botaolimpar" onclick="limpa()">Limpar</button>
+				<button id="botaolimpar" onclick="limpar()">Limpar</button>
 				<button id="botaotodos"  onclick="todos()">Listar todos </button>
-				<button id="deletartodos" onclick="deletartodos()">Deletar Todos</button>
 			</div>
 		</div>
 		
