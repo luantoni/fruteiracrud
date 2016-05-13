@@ -67,10 +67,7 @@ function deletar(){
 function pesquisar(){
 	ajustes();
 	var identidade = document.getElementById ("identidade").value;
-	if (identidade != ""){
-		opc = 3;
-	}
-	requi(parametro);
+	rqpesquisar(parametro);
 }
 
 function todos(){
@@ -91,6 +88,18 @@ function editar(){
 	limpar();
 }
 
+function rqpesquisar(parametro){
+	var xmlhttp = new XMLHttpRequest();
+	var identidade = document.getElementById ("identidade").value;
+	xmlhttp.open("GET", url+parametro, true);
+	xmlhttp.send(identidade);
+	xmlhttp.onreadystatechange = function (){
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+			var myArr = JSON.parse(xmlhttp.responseText);
+			buscaValores(identidade, myArr);
+		}
+	}
+}
 
 function requi (parametro){
 	var xmlhttp = new XMLHttpRequest();
@@ -121,16 +130,6 @@ function requi (parametro){
 		xmlhttp.send();	
 	}
 	
-	else if (opc == 3){ /*opção pesquisar*/
-		xmlhttp.open("GET", url+parametro, true);
-		xmlhttp.send(identidade);
-		xmlhttp.onreadystatechange = function (){
-			if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
-				var myArr = JSON.parse(xmlhttp.responseText);
-				buscaValores(identidade, myArr);
-			}
-		}
-	}
 	
 	else if (opc == 4){ /*opção editar*/
 		xmlhttp.open("PUT", url+parametro, true);
