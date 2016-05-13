@@ -99,6 +99,7 @@ function requi (parametro){
 	var valor = document.getElementById("valor").value;
 	var estado = document.getElementById("status").value;
 	var estoque = document.getElementById("estoque").value;
+	var params="nome="+chave+"&valor="+valor+"&status="+estado+"&estoque="+estoque;
 	
 	xmlhttp.onreadystatechange = function (){
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
@@ -107,8 +108,7 @@ function requi (parametro){
 		}
 	}
 	
-	if (opc == 1){ /*opção incluir*/
-		var params="nome="+chave+"&valor="+valor+"&status="+estado+"&estoque="+estoque;
+	if (opc == 1){ /*opção incluir*/	
 		if (chave != "" & valor != "" & estado != "" & estoque != ""){
 			xmlhttp.open("POST", url+"product", true);
 			xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -133,9 +133,6 @@ function requi (parametro){
 	}
 	
 	else if (opc == 4){ /*opção editar*/
-		var params="nome="+chave+"&valor="+valor+"&status="+estado+"&estoque="+estoque;
-		var i = document.getElementById("tdident");
-		console.log(i);
 		xmlhttp.open("PUT", url+parametro, true);
 		xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 		xmlhttp.send(params);

@@ -1,0 +1,14 @@
+	/*	var n = document.getElementById ("chave").value;
+	var v = document.getElementById ("valor").value;
+	var s = document.getElementById ("status").value;
+	var e = document.getElementById ("estoque").value;
+	$.ajax({
+		  type: 'POST',
+		  url: "http://localhost:3000/product/",
+		  data:{
+			  nome: n,
+			  valor: v,
+			  status: s,  
+			  estoque: e
+		  }
+		});*/
