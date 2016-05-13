@@ -67,7 +67,10 @@ function deletar(){
 function pesquisar(){
 	ajustes();
 	var identidade = document.getElementById ("identidade").value;
-	rqpesquisar(parametro);
+	if (identidade != ""){
+		opc = 3;
+	}
+	requi(parametro);
 }
 
 function todos(){
@@ -88,18 +91,6 @@ function editar(){
 	limpar();
 }
 
-function rqpesquisar(parametro){
-	var xmlhttp = new XMLHttpRequest();
-	var identidade = document.getElementById ("identidade").value;
-	xmlhttp.open("GET", url+parametro, true);
-	xmlhttp.send(identidade);
-	xmlhttp.onreadystatechange = function (){
-		if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
-			var myArr = JSON.parse(xmlhttp.responseText);
-			buscaValores(identidade, myArr);
-		}
-	}
-}
 
 function requi (parametro){
 	var xmlhttp = new XMLHttpRequest();
@@ -108,7 +99,6 @@ function requi (parametro){
 	var valor = document.getElementById("valor").value;
 	var estado = document.getElementById("status").value;
 	var estoque = document.getElementById("estoque").value;
-	var params="nome="+chave+"&valor="+valor+"&status="+estado+"&estoque="+estoque;
 	
 	xmlhttp.onreadystatechange = function (){
 		if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
@@ -117,7 +107,8 @@ function requi (parametro){
 		}
 	}
 	
-	if (opc == 1){ /*opção incluir*/	
+	if (opc == 1){ /*opção incluir*/
+		var params="nome="+chave+"&valor="+valor+"&status="+estado+"&estoque="+estoque;
 		if (chave != "" & valor != "" & estado != "" & estoque != ""){
 			xmlhttp.open("POST", url+"product", true);
 			xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
@@ -130,11 +121,26 @@ function requi (parametro){
 		xmlhttp.send();	
 	}
 	
+	else if (opc == 3){ /*opção pesquisar*/
+	console.log(identidade);
+		xmlhttp.open("GET", url+parametro, true);
+		xmlhttp.send(identidade);
+		xmlhttp.onreadystatechange = function (){
+			if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+				var myArr = JSON.parse(xmlhttp.responseText);
+				buscaValores(identidade, myArr);
+			}
+		}
+	}
 	
 	else if (opc == 4){ /*opção editar*/
+		var params="nome="+chave+"&valor="+valor+"&status="+estado+"&estoque="+estoque;
+		console.log(params);
+		if (identidade!= "" & chave != "" & valor != "" & estado != "" & estoque != ""){
 		xmlhttp.open("PUT", url+parametro, true);
 		xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 		xmlhttp.send(params);
+		}
 	}
 
 	else if (opc == 5){ //opção todos
@@ -145,6 +151,8 @@ function requi (parametro){
 }
 
 function buscaValores(identidade, myArr){
+	console.log(identidade);
+	console.log(myArr);
 	document.getElementById("chave").value = myArr[identidade-1].nome;
 	document.getElementById("valor").value = myArr[identidade-1].valor;
 	document.getElementById("status").value = myArr[identidade-1].status;
