@@ -2,15 +2,12 @@ var url="http://localhost:3000/";
 var parametro="product/";
 var opc;
 var op;
-
+	
 $(document).keypress(function(e) {
 	if (e.which == 13) {
 		incluir();
 	}
 });
-
-$('.classeinput').hide();	
-$('.classebotoes').show();	
 
 function limpar(){
 	document.getElementById("conteudo").innerHTML = "";
@@ -22,40 +19,44 @@ function limpar(){
 	$('.classeinput').show();
 }
 
-function incluir (){
+function ajustes(){
 	$('.classeinput').show();
 	$('#conteudo').hide();
 	$('#botaolimpar').show();
+	$('#identidade').show();
+}
+
+function esconde(){
+	$('#chave').hide();
+	$('#valor').hide();
+	$('#status').hide();
+	$('#estoque').hide();
+}
+
+function ajustestodos(){
+	$('#conteudo').show();
+	$('#botaolimpar').show();
+	$('.classeinput').hide();
+}
+
+function mostrar(){
+	$('#chave').show();
+	$('#valor').show();
+	$('#status').show();
+	$('#estoque').show();
+}
+
+function incluir (){
+	ajustes();
 	$('#identidade').hide();
-	/*	var n = document.getElementById ("chave").value;
-	var v = document.getElementById ("valor").value;
-	var s = document.getElementById ("status").value;
-	var e = document.getElementById ("estoque").value;
-	$.ajax({
-		  type: 'POST',
-		  url: "http://localhost:3000/product/",
-		  data:{
-			  nome: n,
-			  valor: v,
-			  status: s,  
-			  estoque: e
-		  }
-		});*/
 	opc = 1;
 	requi(parametro);
 	limpar();
 }
 
-
 function deletar(){
-	$('.classeinput').show();
-	$('#conteudo').hide();
-	$('#botaolimpar').show();
-	$('#identidade').show();
-	$('#chave').hide();
-	$('#valor').hide();
-	$('#status').hide();
-	$('#estoque').hide();
+	ajustes();
+	esconde();
 	var i = document.getElementById ("identidade").value;
 	parametro = "product/"+i;
 	opc = 2;
@@ -64,34 +65,25 @@ function deletar(){
 }
 
 function pesquisar(){
-	$('.classeinput').show();
-	$('#conteudo').hide();
-	$('#botaolimpar').show();
+	ajustes();
 	var identidade = document.getElementById ("identidade").value;
 	if (identidade != ""){
 		opc = 3;
-		requi(parametro);
 	}
+	requi(parametro);
 }
 
 function todos(){
-	$('#conteudo').show();
-	$('#botaolimpar').show();
-	$('.classeinput').hide();	
+	ajustestodos();
 	opc = 5;
+	parametro="product/";
 	requi(parametro);
 	limpar();
 }
 
 function editar(){
-	$('.classeinput').show();
-	$('#conteudo').hide();
-	$('#botaolimpar').show();
-	$('#identidade').show();
-	$('#chave').show();
-	$('#valor').show();
-	$('#status').show();
-	$('#estoque').show();
+	ajustes();
+	mostrar();
 	identidade = document.getElementById("identidade").value;
 	parametro = "product/"+identidade;
 	opc = 4;
@@ -103,7 +95,7 @@ function editar(){
 function requi (parametro){
 	var xmlhttp = new XMLHttpRequest();
 	var identidade = document.getElementById ("identidade").value;
-	var chave = document.getElementById("chave").value;
+	var chave = document.getElementById("chave").value.toLowerCase();
 	var valor = document.getElementById("valor").value;
 	var estado = document.getElementById("status").value;
 	var estoque = document.getElementById("estoque").value;
@@ -176,3 +168,4 @@ function estante(produtos){
 	'</table>'
 	document.getElementById("conteudo").innerHTML = out;			
 }
+
