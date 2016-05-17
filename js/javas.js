@@ -1,13 +1,72 @@
-var url="http://localhost:3000/";
-var parametro="product/";
-var opc;
-var op;
-	
-$(document).keypress(function(e) {
-	if (e.which == 13) {
-		incluir();
+var strings={
+	endereco:"http://localhost:3000/product/",
+	msgErroTestCode:"Código inválido",
+	cabecalhoTabela:"<table border='1'><tr><th>Chave</th><th>Produto</th><th>Valor</th><th>Status</th><th>Estoque</th></tr>"
+};
+
+function enter(event){
+   	var teclaEnter = event.which || event.keyCode;
+    if(teclaEnter===13){
+    	limparResultado();
+    	testarCodigo();
+    }
+}
+
+function testarCodigo(){
+	var id = document.getElementById('CampoPesquisar').value;
+	document.getElementById('CampoPesquisar').value='';
+	var num = isNaN(id);
+	if(id!=='' && num===false){
+		preparaRequisicao(id);
+	}else{
+		falhaTesteCodigo();
 	}
-});
+}
+
+function preparaRequisicaoGet(codigo){
+	var id = codigo;
+	var requisicao = 'GET';
+	pesquisarProduto(id, requisicao);
+}
+
+function pesquisarProduto(id, requisicao){
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.open(requisicao, strings.endereco+id, true);
+	xmlhttp.send();
+	xmlhttp.onreadystatechange = function (){
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+			var myArr = JSON.parse(xmlhttp.responseText);
+			listarPesquisa(myArr);
+		}else{
+			falhaTesteCodigo();
+		}
+	}
+}
+
+function listarPesquisa(data){
+	var out = "";
+	out+=strings.cabecalhoTabela;
+	out+='<tr><td>'+data.id+'</td>';
+	out+='<td>'+data.nome+'</td>';
+	out+='<td>'+data.valor+'</td>';
+	out+='<td>'+data.status+'</td>';
+	out+='<td>'+data.estoque+'</td></tr></table>';
+	document.getElementById("conteudo").innerHTML = out;
+}
+
+function limparResultado(){
+	document.getElementById('conteudo').innerHTML = "";
+}
+
+function falhaTesteCodigo(){
+	document.getElementById('conteudo').innerHTML = strings.msgErroTestCode;
+}
+
+
+
+
+
+/*
 
 function limpar(){
 	document.getElementById("conteudo").innerHTML = "";
@@ -107,7 +166,7 @@ function requi (parametro){
 		}
 	}
 	
-	if (opc == 1){ /*opção incluir*/
+	if (opc == 1){ /*opção incluir*//*
 		var params="nome="+chave+"&valor="+valor+"&status="+estado+"&estoque="+estoque;
 		if (chave != "" & valor != "" & estado != "" & estoque != ""){
 			xmlhttp.open("POST", url+"product", true);
@@ -116,12 +175,12 @@ function requi (parametro){
 		xmlhttp.send(params);
 	}
 	
-	else if (opc == 2){/*opção deletar*/
+	else if (opc == 2){/*opção deletar*//*
 		xmlhttp.open("DELETE", url+parametro, true);
 		xmlhttp.send();	
 	}
 	
-	else if (opc == 3){ /*opção pesquisar*/
+	else if (opc == 3){ /*opção pesquisar*//*
 	console.log(identidade);
 		xmlhttp.open("GET", url+parametro, true);
 		xmlhttp.send(identidade);
@@ -133,7 +192,7 @@ function requi (parametro){
 		}
 	}
 	
-	else if (opc == 4){ /*opção editar*/
+	else if (opc == 4){ /*opção editar*//*
 		var params="nome="+chave+"&valor="+valor+"&status="+estado+"&estoque="+estoque;
 		console.log(params);
 		if (identidade!= "" & chave != "" & valor != "" & estado != "" & estoque != ""){
@@ -172,4 +231,4 @@ function estante(produtos){
 	'</table>'
 	document.getElementById("conteudo").innerHTML = out;			
 }
-
+*/
