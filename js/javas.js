@@ -1,7 +1,7 @@
 var strings={
 	endereco:"http://localhost:3000/product",
-	msgErroTestCode:"Código inválido",
-	msgErroValidaCampo:"Preencha todos os campos corretamente!",
+	msgErroTestCode:"<p class='error'>Código inválido</p>",
+	msgErroValidaCampo:"<p class='error'>Preencha todos os campos corretamente!</p>",
 	cabecalhoTabela:"<table border='1'><tr><th>Chave</th><th>Produto</th><th>Valor</th><th>Status</th><th>Estoque</th></tr>"
 };
 
@@ -148,6 +148,7 @@ function editarProduto(id, requisicao, url, parametros){
 	xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
 	xmlhttp.send(parametros);
 	limparCampos();
+	limparResultado();
 	ocultarForm();
 	ocultarBotoesEditarDeletar();
 }
