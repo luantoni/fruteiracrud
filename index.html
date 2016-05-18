@@ -15,27 +15,32 @@
 			<input id="CampoPesquisar" type="text" placeholder="Código do produto" onkeypress="enter(event)"/>
 			<button id="BotaoPesquisar" class="pesquisa"  onclick="testarCodigo()"></button>
 			</br></br>
-			<div class="classebotoes">
-				<button id="incluir"  onclick="incluir()">Incluir </button>
-				<button id="editar" onclick="editar()">Editar</button>
-				<button id="deletar"  onclick="deletar()">Deletar </button>
-				<button id="botaotodos"  onclick="todos()">Listar todos </button>
+			<div class="botoes">
+				<button id="menuIncluir"  onclick="preparaTelaInsercao()">Incluir Produto</button>
+				<button id="menuEditar" onclick="preparaTelaEdicao()">Editar Produto</button>
+				<button id="menuDeletar"  onclick="preparaRequisicaoDel()">Deletar Produto</button>
+				<button id="botaotodos"  onclick="pesquisarTodosProdutos()">Listar todos</button>
 			</div>
-			<div class = "classeinput">
+			<div id="inputs" class = "inputs">
+				</br>
 				<form id="caixapesquisa">
-					<input id="identidade" value="" type="text" placeholder="Id"/>
-					<br>
-					<input id="chave"  type="text" placeholder="Produto"/>
-					<br>
-					<input id="valor"  type="text" placeholder="R$"/>
-					<br>
-					<input id="status" type="text" placeholder="Status"/>
-					<br>
-					<input id="estoque" type="text" placeholder="Estoque"/>
+					</br>
+					<input type="hidden" id="chave" placeholder="id"/>
+					<input type="text" id="nome" placeholder="Produto"/>
+					</br>
+					<input type="text" id="valor" placeholder="R$"/>
+					</br>
+					<input type="text" id="status" placeholder="Status"/>
+					</br>
+					<input type="text" id="estoque" placeholder="Estoque"/>
+					</br></br>
+					<input id="editar" class="editar" type="button" value="Editar" onclick="preparaRequisicaoPut()"/>
+					<input id="incluir" class="incluir" type="button" value="Incluir" onclick="preparaRequisicaoPost()"/>
+					<input id="cancelar" class="reset" type="reset" value="cancelar" onclick="cancela();"/>
 				</form>
 			</div>
 		</div>
-		<div id="conteudo" data-comando></div>
+		<div id="conteudo"></div>
 	</div>
 </body>
 </html>
