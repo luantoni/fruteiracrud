@@ -1,5 +1,5 @@
 html, body{cursor:default;}
-#caixa {background-color: #003300; text-align: center;	padding: 20px; margin: 10px; border-radius: 10px; border: 8px double grey; height: auto;}
+#caixa{background-color: #003300; text-align: center;	padding: 20px; margin: 10px; border-radius: 10px; border: 8px double grey; height: auto;}
 #conteudo{background-color: #003300; margin: 10px; padding: -20px; overflow-y:auto;}
 .inputs, #botaolimpar, #menuEditar, #menuDeletar, #editar, #incluir{display:none;}
 .menuprincipal{text-align: center; padding: 5px; margin: 10px;}
@@ -7,7 +7,24 @@ html, body{cursor:default;}
 #chave{border-radius: 10px;}
 h1 {text-align: center; color: white;}
 header{background-image: url("../img/background.jpg"); border-radius: 10px; box-shadow:0 0 20px #003300; margin: 10px; font-size: 170%;}
-input{font-size: 170%; text-align: center; border-radius: 10px;}
+input, select{font-size: 170%; text-align: center; border-radius: 10px;}
+input[type="text"]{text-align:left; color:#000;}
+::-webkit-input-placeholder {
+   color: #000;
+}
+
+:-moz-placeholder {
+   color: #000;
+}
+
+::-moz-placeholder {
+   color: #000;
+}
+
+:-ms-input-placeholder {  
+   color: #000;
+}
+select{width:345px;}
 button, .incluir, .editar, .reset{width:155px; font-size: 120%; border-radius: 10px; background-color:white;}
 button.pesquisa{height:30px; width:30px; border:none; background-color:transparent; background-image: url("../img/lupa.svg"); cursor:pointer; outline:none;}
 table{background-color:white; font-size: 120%; padding: 20px; left: 600px; width: 480px; border: black; color: black; text-align:center; margin: 0 auto; border-radius: 10px; box-shadow:0 0 20px white;}

@@ -4,7 +4,7 @@
 	<title>Teste de requisição</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<meta charset="UTF-8">
-	<script src="js/javas.js"> </script>
+	<script src="js/script.js"> </script>
 </head>
 <body>
 	<header>
@@ -30,11 +30,15 @@
 					<input type="hidden" id="chave" placeholder="id"/>
 					<input type="text" id="nome" placeholder="Produto"/>
 					</br>
-					<input type="text" id="valor" placeholder="R$"/>
+					<input type="text" id="valor" placeholder="R$" maxlength="5" onkeyup="this.value=this.value.replace(/[^0-9.]/g, '');"/>
 					</br>
-					<input type="text" id="status" placeholder="Status"/>
+					<select id="status">
+						<option value="opcao">Selecione uma opção</option>
+						<option value="A">Ativo</option>
+						<option value="I">Inativo</option>
+					</select>
 					</br>
-					<input type="text" id="estoque" placeholder="Estoque"/>
+					<input type="text" id="estoque" placeholder="Estoque" maxlength="5"/>
 					</br></br>
 					<input id="editar" class="editar" type="button" value="Editar" onclick="preparaRequisicaoPut()"/>
 					<input id="incluir" class="incluir" type="button" value="Incluir" onclick="preparaRequisicaoPost()"/>

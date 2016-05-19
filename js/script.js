@@ -5,6 +5,7 @@ var strings={
 	cabecalhoTabela:"<table border='1'><tr><th>Chave</th><th>Produto</th><th>Valor</th><th>Status</th><th>Estoque</th></tr>"
 };
 
+//PESQUISAR
 function enter(event){
    	var teclaEnter = event.which || event.keyCode;
     if(teclaEnter===13){
@@ -21,6 +22,9 @@ function testarCodigo(){
 		preparaRequisicaoGet(id);
 	}else{
 		falhaTesteCodigo();
+		ocultarForm();
+		ocultarBotoesEditarDeletar();
+		limparCampos();
 	}
 }
 
@@ -34,79 +38,6 @@ function preparaRequisicaoGet(codigo){
 		url = strings.endereco+'/'+id;
 	}
 	pesquisarProduto(id, requisicao, url);
-}
-
-function preparaTelaInsercao(){
-	mostrarFormIncluir();
-	limparCampos();
-	ocultarBotoesEditarDeletar();
-}
-
-function procurarId(){
-	var buscaId = document.getElementById('idProd');
-	var id = buscaId.getAttribute('data-id');
-	return id;
-}
-
-function preparaTelaEdicao(){
-	var id = procurarId();
-	mostrarFormEditar();
-	preencheCampos(id);
-}
-
-function preencheCampos(codigo){
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.open("GET", strings.endereco+'/'+codigo, true);
-	xmlhttp.send();
-	xmlhttp.onreadystatechange = function (){
-		if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
-			var myArr = JSON.parse(xmlhttp.responseText);
-			document.getElementById('chave').value = myArr.id;
-			document.getElementById('nome').value = myArr.nome;
-			document.getElementById('valor').value = myArr.valor;
-			document.getElementById('status').value = myArr.status;
-			document.getElementById('estoque').value = myArr.estoque;
-		}
-	}
-}
-
-function preparaRequisicaoPost(){
-	var nome = document.getElementById('nome').value;
-	var valor = document.getElementById('valor').value;
-	var status = document.getElementById('status').value;
-	var estoque = document.getElementById('estoque').value;
-	validaCamposPost(nome, valor, status, estoque);
-}
-
-function preparaRequisicaoPut(){
-	var id = document.getElementById('chave').value;
-	var nome = document.getElementById('nome').value;
-	var valor = document.getElementById('valor').value;
-	var status = document.getElementById('status').value;
-	var estoque = document.getElementById('estoque').value;
-	validaCamposPut(id, nome, valor, status, estoque);
-}
-
-function validaCamposPost(nome, valor, status, estoque){
-	if(nome!==''&&valor!==''&&status!==''&&estoque!==''){
-		var requisicao = 'POST';
-		var url = strings.endereco;
-		var parametros = 'nome='+nome+'&&valor='+valor+'&&status='+status+'&&estoque='+estoque;
-		incluirProdutos(requisicao, url, parametros);
-	}else{
-		document.getElementById('conteudo').innerHTML = strings.msgErroValidaCampo;
-	}
-}
-
-function validaCamposPut(id, nome, valor, status, estoque){
-	if(nome!==''&&valor!==''&&status!==''&&estoque!==''){
-		var requisicao = 'PUT';
-		var url = strings.endereco+'/';
-		var parametros = 'nome='+nome+'&valor='+valor+'&status='+status+'&estoque='+estoque;
-		editarProduto(id, requisicao, url, parametros);
-	}else{
-		document.getElementById('conteudo').innerHTML = strings.msgErroValidaCampo;
-	}
 }
 
 function pesquisarProduto(id, requisicao, url){
@@ -131,26 +62,25 @@ function pesquisarProduto(id, requisicao, url){
 	}
 }
 
-function incluirProdutos(requisicao, url, parametros){
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.open(requisicao, url, true);
-	xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-	xmlhttp.send(parametros);
-	limparCampos();
-	ocultarForm();
-	var id = "todos";
-	preparaRequisicaoGet(id);
-}
-
-function editarProduto(id, requisicao, url, parametros){
-	var xmlhttp = new XMLHttpRequest();
-	xmlhttp.open(requisicao, url+id, true);
-	xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-	xmlhttp.send(parametros);
-	limparCampos();
-	limparResultado();
-	ocultarForm();
-	ocultarBotoesEditarDeletar();
+function listarPesquisaCompleta(data){
+	var out = "";
+	var i;
+	var totalProdutos=0;
+	var totalValor=0;
+	out+=strings.cabecalhoTabela;
+	for (i=0; i<data.length; i++){
+		out+='<tr><td>'+data[i].id+'</td>';
+		out+='<td>'+data[i].nome+'</td>';
+		out+='<td>'+data[i].valor+'</td>';
+		out+='<td>'+data[i].status+'</td>';
+		out+='<td>'+data[i].estoque+'</td></tr>';
+		totalProdutos+=data[i].estoque;
+		totalValor+=data[i].valor;
+	}
+	var valorFormat = parseFloat(totalValor.toFixed(2));
+	out+='<tr><td colspan="3">Total em produtos R$ '+valorFormat+'</td><td colspan="2">Total de produtos '+totalProdutos+'</td></tr>';
+	out+='</table>';
+	document.getElementById("conteudo").innerHTML = out;
 }
 
 function listarPesquisaIndividual(data){
@@ -164,21 +94,99 @@ function listarPesquisaIndividual(data){
 	document.getElementById("conteudo").innerHTML = out;
 }
 
-function listarPesquisaCompleta(data){
-	var out = "";
-	var i;
-	out+=strings.cabecalhoTabela;
-	for (i=0; i<data.length; i++){
-		out+='<tr><td>'+data[i].id+'</td>';
-		out+='<td>'+data[i].nome+'</td>';
-		out+='<td>'+data[i].valor+'</td>';
-		out+='<td>'+data[i].status+'</td>';
-		out+='<td>'+data[i].estoque+'</td></tr>';
-	}
-	out+='</table>';
-	document.getElementById("conteudo").innerHTML = out;
+//INSERIR
+function preparaTelaInsercao(){
+	mostrarFormIncluir();
+	limparCampos();
+	ocultarBotoesEditarDeletar();
 }
 
+function preparaRequisicaoPost(){
+	var nome = document.getElementById('nome').value;
+	var valor = document.getElementById('valor').value;
+	var status = document.getElementById('status').value;
+	var estoque = document.getElementById('estoque').value;
+	validaCamposPost(nome, valor, status, estoque);
+}
+
+function validaCamposPost(nome, valor, status, estoque){
+	if(nome!==''&&valor!==''&&status!=='opcao'&&estoque!==''){
+		var requisicao = 'POST';
+		var url = strings.endereco;
+		var parametros = 'nome='+nome+'&&valor='+valor+'&&status='+status+'&&estoque='+estoque;
+		incluirProdutos(requisicao, url, parametros);
+	}else{
+		document.getElementById('conteudo').innerHTML = strings.msgErroValidaCampo;
+	}
+}
+
+function incluirProdutos(requisicao, url, parametros){
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.open(requisicao, url, true);
+	xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	xmlhttp.send(parametros);
+	limparCampos();
+	ocultarForm();
+	var id = "todos";
+	preparaRequisicaoGet(id);
+}
+
+//EDITAR
+function preparaTelaEdicao(){
+	var id = procurarId();
+	esconderBotaoDeletar();
+	mostrarFormEditar();
+	preencheCampos(id);
+}
+
+function preencheCampos(codigo){
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.open("GET", strings.endereco+'/'+codigo, true);
+	xmlhttp.send();
+	xmlhttp.onreadystatechange = function (){
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+			var myArr = JSON.parse(xmlhttp.responseText);
+			document.getElementById('chave').value = myArr.id;
+			document.getElementById('nome').value = myArr.nome;
+			document.getElementById('valor').value = myArr.valor;
+			document.getElementById('status').value = myArr.status;
+			document.getElementById('estoque').value = myArr.estoque;
+		}
+	}
+}
+
+function preparaRequisicaoPut(){
+	var id = document.getElementById('chave').value;
+	var nome = document.getElementById('nome').value;
+	var valor = document.getElementById('valor').value;
+	var status = document.getElementById('status').value;
+	var estoque = document.getElementById('estoque').value;
+	validaCamposPut(id, nome, valor, status, estoque);
+}
+
+function validaCamposPut(id, nome, valor, status, estoque){
+	if(nome!==''&&valor!==''&&status!=='opcao'&&estoque!==''){
+		var requisicao = 'PUT';
+		var url = strings.endereco+'/';
+		var parametros = 'nome='+nome+'&valor='+valor+'&status='+status+'&estoque='+estoque;
+		editarProduto(id, requisicao, url, parametros);
+	}else{
+		document.getElementById('conteudo').innerHTML = strings.msgErroValidaCampo;
+	}
+}
+
+function editarProduto(id, requisicao, url, parametros){
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.open(requisicao, url+id, true);
+	xmlhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+	xmlhttp.send(parametros);
+	limparCampos();
+	limparResultado();
+	ocultarForm();
+	ocultarBotoesEditarDeletar();
+}
+
+//EXCLUIR
 function preparaRequisicaoDel(){
 	var id = procurarId();
 	var requisicao = 'DELETE';
@@ -201,6 +209,14 @@ function deletarProduto(codigo, requisicao, url){
 	xmlhttp.send();
 }
 
+function procurarId(){
+	var buscaId = document.getElementById('idProd');
+	var id = buscaId.getAttribute('data-id');
+	return id;
+}
+
+
+//PESQUISAR TODOS OS PRODUTOS
 function pesquisarTodosProdutos(){
 	var id = "todos";
 	preparaRequisicaoGet(id);
@@ -208,6 +224,7 @@ function pesquisarTodosProdutos(){
 	limparCampos();
 }
 
+//FUNÇÕES DE AJUSTES
 function cancela(){
 	ocultarForm();
 	limparResultado();
@@ -239,6 +256,10 @@ function mostrarFormIncluir(){
 	limparResultado();
 }
 
+function esconderBotaoDeletar(){
+	document.getElementById('menuDeletar').style.display = "none";
+}
+
 function mostrarFormEditar(){
 	document.getElementById('inputs').style.display = "inline";
 	document.getElementById('incluir').style.display = "none";
@@ -253,6 +274,6 @@ function ocultarForm(){
 function limparCampos(){
 	document.getElementById('nome').value = '';
 	document.getElementById('valor').value = '';
-	document.getElementById('status').value = '';
+	document.getElementById('status').value = 'opcao';
 	document.getElementById('estoque').value = '';
 }
