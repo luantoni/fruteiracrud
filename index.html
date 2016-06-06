@@ -4,43 +4,49 @@
 	<title>Teste de requisição</title>
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<meta charset="UTF-8">
-	<script src="js/jquery-1.12.3.js"></script>
-	<script src="js/javas.js"> </script>
+	<script src="js/script.js"> </script>
 </head>
 <body>
 	<header>
 		<h1>Fruteira</h1>
 	</header>
-	
 	<div id="caixa">
 		<div class="menuprincipal">
-			<div class = "classeinput">
-				<form id="caixapesquisa" action="#" method="POST" >
-					<input id="identidade" value="" type="text" placeholder="Id" onfocus="this.value='';"/>
-					<br>
-					<input id="chave"  type="text" placeholder="Produto"  onfocus="this.value='';"/>
-					<br>
-					<input id="valor"  type="text" placeholder="R$"  onfocus="this.value='';"/>
-					<br>
-					<input id="status" type="text" placeholder="Status"  onfocus="this.value='';"/>
-					<br>
-					<input id="estoque" type="text" placeholder="Estoque"  onfocus="this.value='';"/>
+			<div id="caixaPesquisa">
+				<input id="CampoPesquisar" type="text" placeholder="Código do produto" onkeypress="enter(event)"/>
+				<button id="BotaoPesquisar" class="pesquisa"  onclick="testarCodigo()"></button>
+			</div>
+			</br></br>
+			<div class="botoes">
+				<button id="menuIncluir"  onclick="preparaTelaInsercao()">Incluir Produto</button>
+				<button id="menuEditar" onclick="preparaTelaEdicao()">Editar Produto</button>
+				<button id="menuDeletar"  onclick="preparaRequisicaoDel()">Deletar Produto</button>
+				<button id="botaotodos"  onclick="pesquisarTodosProdutos()">Listar todos</button>
+			</div>
+			<div id="inputs" class = "inputs">
+				</br>
+				<form id="caixapesquisa">
+					</br>
+					<input type="hidden" id="chave" placeholder="id"/>
+					<input type="text" id="nome" placeholder="Produto"/>
+					</br>
+					<input type="text" id="valor" placeholder="R$" maxlength="5" onkeyup="this.value=this.value.replace(/[^0-9.]/g, '');"/>
+					</br>
+					<select id="status">
+						<option value="opcao">Selecione uma opção</option>
+						<option value="A">Ativo</option>
+						<option value="I">Inativo</option>
+					</select>
+					</br>
+					<input type="text" id="estoque" placeholder="Estoque" maxlength="5"/>
+					</br></br>
+					<input id="editar" class="editar" type="button" value="Editar" onclick="preparaRequisicaoPut()"/>
+					<input id="incluir" class="incluir" type="button" value="Incluir" onclick="preparaRequisicaoPost()"/>
+					<input id="cancelar" class="reset" type="reset" value="cancelar" onclick="cancela();"/>
 				</form>
-				<br>
-			</div>
-			
-			<div class="classebotoes">
-				<button id="pesquisar" onclick="pesquisar()">Pesquisar</button>
-				<button id="incluir"  onclick="incluir()">Incluir </button>
-				<button id="botao"  onclick="deletar()">Deletar </button>
-				<button id="editar" onclick="editar()">Editar</button>
-				<button id="botaolimpar" onclick="limpar()">Limpar</button>
-				<button id="botaotodos"  onclick="todos()">Listar todos </button>
 			</div>
 		</div>
-		
-		<div id="conteudo">
-		</div>
+		<div id="conteudo"></div>
 	</div>
 </body>
 </html>
